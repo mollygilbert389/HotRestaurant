@@ -1,10 +1,7 @@
-// Dependencies
-// =============================================================
+
 var express = require("express");
 var path = require("path");
 
-// Sets up the Express App
-// =============================================================
 var app = express();
 var PORT = process.env.PORT || 3000;
 
@@ -12,8 +9,6 @@ var PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Star Wars Characters (DATA)
-// =============================================================
 var reservations = [
   {
     routeName: "Molly G",
@@ -32,16 +27,22 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.get("/add", function(req, res) {
+//shows you where to make reservatios
+app.get("/makeReso", function(req, res) {
   res.sendFile(path.join(__dirname, "makeReso.html"));
 });
 
-// Displays all characters
+//shows current reservations
+app.get("/reso", function(req, res) {
+    res.sendFile(path.join(__dirname, "reso.html"));
+});
+
+// Displays all reservations
 app.get("/api/reservations", function(req, res) {
   return res.json(reservations);
 });
 
-// Displays a single character, or returns false
+// Displays a single reservation, or returns false
 app.get("/api/reservations/:reservation", function(req, res) {
   var resoMaker = req.params.reservation;
 
@@ -62,13 +63,12 @@ app.post("/api/reservations", function(req, res) {
   // This works because of our body parsing middleware
   var newreso = req.body;
 
-  // Using a RegEx Pattern to remove spaces from newCharacter
   // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
   newreso.routeName = newreso.name.replace(/\s+/g, "").toLowerCase();
 
   console.log(newreso);
 
-  characters.push(newreso);
+  newreso.push(newreso);
 
   res.json(newreso);
 });
