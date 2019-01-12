@@ -48,9 +48,9 @@ app.get("/api/reservations/:reservation", function(req, res) {
 
   console.log(resoMaker);
 
-  for (var i = 0; i < reservations.length; i++) {
-    if (resoMaker === reservations[i].routeName) {
-      return res.json(reservations[i]);
+  for (var i = 0; i < reservation.length; i++) {
+    if (resoMaker === reservation[i].routeName) {
+      return res.json(reservation[i]);
     }
   }
 

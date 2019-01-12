@@ -19,18 +19,14 @@
       <h1>Hot Restaurants</h1>
       <h3>Make your reservation</h3>
       <hr>
-      <button class="btn btn-danger btn-lg"><span class="fa" id="makeReso"></span> Make Reservation</button>
-      <button class="btn btn-primary btn-lg"><span class="fa" id="reso"></span> View Tables</button>
+      <a href="/makeReso"><button class="btn btn-danger btn-lg" id="makeReso"><span class="fa"></span> Make Reservation</button></a>
+      <a href="/reso"><button class="btn btn-primary btn-lg" id="reso"><span class="fa"></span> View Tables</button></a>
     </div>
     <div class="row">
 
   <script type="text/javascript">
 
   
-  $("#makeReso").on("click", function () {
-      res.sendFile(path.join(__dirname, "makeReso.html"));
-  });
-
   </script>
 
 </body>
