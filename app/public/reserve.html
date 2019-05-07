@@ -17,8 +17,8 @@
       <h1>Hot Restaurants</h1>
       <h3>click the red button below to make a reservation!</h3>
       <hr>
-      <a href="/reso"><button class="btn btn-danger btn-lg" id="tables"><span class="fa"></span> View Tables</button></a>
-      <a href="/"><button class="btn btn-primary btn-lg" id="home"><span class="fa"></span> Home</button></a>
+      <a href="/tables"><button class="btn btn-danger btn-lg" id="tables"><span class="fa"></span> View Tables</button></a>
+      <a href="/home"><button class="btn btn-primary btn-lg" id="home"><span class="fa"></span> Home</button></a>
     </div>
     <div class="row">
       
@@ -66,23 +66,48 @@
     </div>
   </div>
 
+  <footer class="footer">
+      <div class=container>
+        <p>Control Panel</p>
+        <p><a href="#" id="clear">Clear Tables</a></p> | <a href="/api/tables">API Table Links</a> | <a href="/api/waitlist">API Waitlist</a> | <a href="#">Github Repository</a></p>
+      </div>
+  
+    </footer>
+
   <script type="text/javascript">
-    // Question: What does this code do?
-    $("#add-btn").on("click", function(event) {
-      event.preventDefault();
+
+    $("#add-btn").on("click", function() {
+      
       var newReservation = {
-        name: $("#name").val().trim(),
+        customerName: $("#name").val().trim(),
         phoneNumber: $("#phoneNumber").val().trim(),
-        email: $("#email").val().trim(),
-        nameId: $("#nameId").val().trim()
+        customerEmail: $("#email").val().trim(),
+        customerID: $("#nameId").val().trim()
       };
 
-      // Question: What does this code do??
-      $.post("/api/reservations", newReservation)
-        .then(function(data) {
-          console.log("makeReso.html", data);
-          alert("Added your reservation!");
-        });
+      console.log(newReservation)
+
+      var currentURL = window.location.origin;
+
+      $.post(currentURL + "/api/tables", newReservation, function (data){
+
+        if (data == true) {
+          alert("You are booked!")
+        } 
+        
+        if (data === false) {
+          alert("You have been added to the waiting list.")
+        }
+
+        $("#name").val("")
+        $("#phoneNumber").val("")
+        $("#email").val("")
+        $("#nameId").val("")
+
+      })
+
+      return false;
+
     });
   </script>
 

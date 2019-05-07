@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hot Restaurant Reservations</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Hot Restaurant</h1>
+      <h3>Current Reservations and Waiting List</h3>
+      <hr>
+      <a href="/reserve"><button class="btn btn-danger btn-lg" id="tables"><span class="fa"></span> View Tables</button></a>
+      <a href="/home"><button class="btn btn-primary btn-lg" id="home"><span class="fa"></span> Home</button></a>
+    </div>
+    </div>
+
+      <div class="col-12">
+
+        <div class="card">
+          <div class="card-header">
+            <h3><strong>Current Reservations</strong></h3>
+          </div>
+          <div class="card-body" id="tableSection">
+          </div>
+        </div>
+      </div>
+
+  <br><br>
+
+  
+  <div class="col-12">
+  <div class="card">
+    <div class="card-header">
+      <h3><strong>Waiting List</strong></h3>
+    </div>
+    <div class="card-body" id="waitlistSection">
+    </div>
+  </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<footer class="footer">
+    <div class=container>
+      <p>Control Panel</p>
+      <p><a href="#" id="clear">Clear Tables</a></p> | <a href="/api/tables">API Table Links</a> | <a href="/api/waitlist">API Waitlist</a> | <a href="#">Github Repository</a></p>
+    </div>
+
+  </footer>
+
+</body>
+
+<script type="text/javascript">
+
+
+  function runTableQuery() {
+    var currentUrl = window.location.origin;
+
+    $.ajax({url: currentUrl +  "/api/tables", method: "GET"})
+
+    .done(function(tableData){
+
+      console.log("--------")
+      console.log("URL: " + currentUrl + "/api/tables")
+      console.log("--------")
+      console.log(tableData)
+      console.log("--------")
+
+      for (var i=0; i<tableData.length; i++) {
+        console.log(tableData[i])
+
+        var tableSection = $("<div>")
+        tableSection.addClass('well')
+        tableSection.attr('id', 'tableWell-' + i +1);
+        $("#tableSection").append(tableSection)
+
+        
+        var tableNumber = i + 1; 
+
+        $("#tableWell-" + i+1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + tableData[i].customerID + "</h2>")
+
+      }
+
+    })
+  }
+
+  function runWaitListQuery() {
+    var currentUrl = window.location.origin;
+
+    $.ajax({url: currentUrl +  "/api/waitlist", method: "GET"})
+
+    .done(function(waitingListData){
+
+      console.log("--------")
+      console.log("URL: " + currentUrl + "/api/waitlist")
+      console.log("--------")
+      console.log(waitingListData)
+      console.log("--------")
+
+      for (var i=0; i<waitingListData.length; i++) {
+        console.log(waitingListData[i])
+
+        var waitlistSection = $("<div>")
+        waitlistSection.addClass('well')
+        waitlistSection.attr('id', 'waitlistWell-' + i +1);
+        $("#waitlistSection").append(waitlistSection)
+
+        
+        var tableNumber = i + 1; 
+
+        $("#waitlistWell-" + i+1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + waitingListData[i].customerID + "</h2>")
+
+      }
+
+    })
+  }
+
+
+  function clearTable() {
+    var currentUrl = window.location.origin;
+    $.ajax({url: currentUrl + "/api/clear", method: "POST"})
+  }
+
+  $("#clear").on("click", function(){
+    alert("Clearing Reservations!")
+    clearTable();
+    location.reload();
+
+  })
+
+  runTableQuery();
+  runWaitListQuery();
+
+</script>
+
+</html>

@@ -17,12 +17,20 @@
   <div class="container">
     <div class="jumbotron">
       <h1>Hot Restaurants</h1>
-      <h3>Make your reservation</h3>
+      <h3>We only have 5 tables remaining! Make your reservation now!</h3>
       <hr>
-      <a href="/makeReso"><button class="btn btn-danger btn-lg" id="makeReso"><span class="fa"></span> Make Reservation</button></a>
-      <a href="/reso"><button class="btn btn-primary btn-lg" id="reso"><span class="fa"></span> View Tables</button></a>
+      <a href="/reserve"><button class="btn btn-danger btn-lg" id="makeReso"><span class="fa"></span> Make Reservation</button></a>
+      <a href="/tables"><button class="btn btn-primary btn-lg" id="reso"><span class="fa"></span> View Tables</button></a>
     </div>
     <div class="row">
+
+        <footer class="footer">
+            <div class=container>
+              <p>Control Panel</p>
+              <p><a href="#" id="clear">Clear Tables</a></p> | <a href="/api/tables">API Table Links</a> | <a href="/api/waitlist">API Waitlist</a> | <a href="#">Github Repository</a></p>
+            </div>
+        
+          </footer>
 
   <script type="text/javascript">
 
